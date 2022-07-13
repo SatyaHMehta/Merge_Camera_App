@@ -17,14 +17,25 @@ function cameraStart() {
       console.error("Oops. Something is broken.", error);
     });
 }
+// Download the picture when clicked.
+
 // Take a picture when cameraTrigger is tapped
 cameraTrigger.onclick = function () {
   cameraSensor.width = cameraView.videoWidth;
   cameraSensor.height = cameraView.videoHeight;
   cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-  cameraOutput.src = cameraSensor.toDataURL("image/webp");
+  cameraOutput.src = cameraSensor
+    .toDataURL("image/png")
+    .replace("image/jpg", "image/octet-stream");
   cameraOutput.classList.add("taken");
-  console.log(cameraOutput.src);
+
+  console.log("hello");
+  const download = document.getElementById("download");
+  var image = document
+    .getElementById("camera--sensor")
+    .toDataURL("image/png")
+    // .replace("image/jpg", "image/octet-stream");
+  download.setAttribute("href", image);
 };
 // Start the video stream when the window loads
 window.addEventListener("load", cameraStart, false);
